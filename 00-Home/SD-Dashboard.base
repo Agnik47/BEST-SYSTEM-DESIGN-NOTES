@@ -1,0 +1,82 @@
+filters:
+  or:
+    - file.inFolder("01-Foundations")
+    - file.inFolder("02-Scaling")
+    - file.inFolder("03-Data-Storage")
+    - file.inFolder("04-Performance")
+    - file.inFolder("05-Communication")
+    - file.inFolder("06-Distributed-Systems")
+    - file.inFolder("07-Production")
+    - file.inFolder("08-Modern-Topics")
+    - file.inFolder("09-Interview-Playbook")
+    - file.inFolder("10-Case-Studies")
+    - file.inFolder("11-Interview-Questions")
+    - file.inFolder("13-Senior-Engineering")
+    - file.inFolder("14-Future-Engineering")
+properties:
+  note.module:
+    displayName: Module
+  note.lecture:
+    displayName: Lecture
+  note.priority:
+    displayName: Priority
+  note.status:
+    displayName: Status
+  note.level:
+    displayName: Level
+views:
+  - type: table
+    name: Concepts by module
+    filters:
+      and:
+        - '!file.hasTag("case-study")'
+        - '!file.hasTag("moc")'
+    groupBy:
+      property: module
+      direction: ASC
+    order:
+      - file.name
+      - lecture
+      - priority
+      - level
+      - status
+  - type: table
+    name: Case studies
+    filters:
+      and:
+        - file.hasTag("case-study")
+    order:
+      - file.name
+      - lecture
+      - level
+      - priority
+      - status
+  - type: table
+    name: Must-know only
+    filters:
+      and:
+        - note.priority.contains("Must")
+    order:
+      - file.name
+      - module
+      - status
+  - type: table
+    name: Senior and future skills
+    filters:
+      or:
+        - file.inFolder("13-Senior-Engineering")
+        - file.inFolder("14-Future-Engineering")
+    order:
+      - file.name
+      - priority
+      - level
+      - status
+  - type: cards
+    name: Not started yet
+    filters:
+      and:
+        - note.status == "Not Started"
+        - '!file.hasTag("moc")'
+    order:
+      - file.name
+      - priority
